@@ -41,8 +41,7 @@ server {
 
 3\. Goto `app/config/*.php` and configure your application and set your `$config['base_url']` in `app/config/app.php`
 
-4\. Point your browser to your `$config['base_url']` and hopefully see your starting page. CodeNimbly is bundled with [Bootstrap](http://getbootstrap.com) 3 and JQuery(http://jquery.com) v2.1.1.
-
+4\. Point your browser to your `$config['base_url']` and hopefully see your starting page. CodeNimbly is bundled with [Bootstrap](http://getbootstrap.com) 3 and [JQuery](http://jquery.com) v2.1.1.
 
 ## Documentation
 
