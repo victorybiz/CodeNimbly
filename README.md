@@ -46,7 +46,7 @@ location / {
 
 ## Documentation
 
-Documentation coming soon.
+CodeNimbly codebase is easy to understand but documentation coming soon.
 
 
 ## Credits
