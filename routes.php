@@ -4,9 +4,9 @@
  *
  * This file lets you re-map URI requests to specific controller functions
  * 
- * $routes[] = array($method, $route, $target);
+ * $routes[] = array($method, $route, $target, Optional $name);
  *  
- * $routes[] = array('GET|POST', '/profile/{user_id}}/', 'ControllerClassName@methodToCall'); 
+ * $routes[] = array('GET|POST', '/profile/{user_id}}/', 'ControllerClassName@methodToCall', 'profile'); 
  * $routes[] = array('GET|POST', '/profile/{num:user_id}/', 'path/to/ControllerClassName@methodToCall'); 
  * $routes[] = array('GET|POST', '/profile/{alpha]:username}/', 'path/to/ControllerClassName@methodToCall'); 
  * $routes[] = array('GET|POST', '/profile/{[0-9]+:user_id}/', 'path/to/ControllerClassName@methodToCall'); 
@@ -18,15 +18,15 @@
  * {alnum:user}              // Match alphanumeric characters as 'user'
  * {hex:key}                 // Match hexadecimal characters as 'key'
  * {[male|female]+:gender}   // RegEx Pattern Match either 'male' or 'female' as 'gender'
- * {[A-Z]+:title}             // RegEx Pattern Match upper case alphabets characters  as 'title'
+ * {[A-Z]+:title}            // RegEx Pattern Match upper case alphabets characters  as 'title'
  *
  * @package		CodeNimbly
  * @subpackage  CodeNimbly
- * @category    Routes
- * @since       Version 1.0 
  */
+$subdomain = preg_replace('/\.'.$config['domain_name'].'/', '', $_SERVER["HTTP_HOST"]);
 
-// Routes to display Home Welome Page
+
+// Routes to display Home Welcome Page
 $routes[] = array('GET', '/', 'home/Welcome@index');
 
 

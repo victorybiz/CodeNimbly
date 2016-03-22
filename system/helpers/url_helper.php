@@ -72,17 +72,6 @@ if (! function_exists('css_url')) {
 	}
 }
 
-if (! function_exists('css_url')) {
-	function css_url($uri = '')
-    {   
-        global $Registry;
-		$css_url = $Registry->config->get('css_url');
-        if (substr($css_url, -1, 1) != '/')  {
-            $css_url .= '/';
-        }
-        return $css_url . $uri;
-	}
-}
 
 if (! function_exists('images_url')) {
 	function images_url($uri = '')
@@ -119,6 +108,41 @@ if (! function_exists('uploads_url')) {
         return $uploads_url . $uri;
 	}
 }
+
+
+
+/**
+ * Header Redirect
+ *
+ * Header redirect in two flavors
+ * For very fine grained control over headers, you could use the Output
+ * Library's set_header() function.
+ *
+ * @access	public
+ * @param	string $uri - the URI string
+ * @param	string $method - Redirect method (�auto�, �location� or �refresh�)
+ * @param	integer $http_response_code - HTTP Response code (usually 302 or 303)
+ * @return	void
+ */
+if ( ! function_exists('redirect'))
+{
+	function redirect($uri = '', $method = 'location', $http_response_code = 302)
+	{
+	   $url = $uri;
+		if ( ! preg_match('#^https?://#i', $uri)) {
+			$url = base_url($uri);
+		}
+		switch($method)
+		{
+			case 'refresh'	: header("Refresh:0;url=".$url);
+				break;
+			default			: header("Location: ".$url, true, $http_response_code);
+				break;
+		}
+		exit;
+	}
+}
+
 
 
 if (! function_exists('create_slug')) {

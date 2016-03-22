@@ -14,6 +14,9 @@ class Welcome extends Controller {
         $this->template->write('meta_author', get_config('meta_author'));
         
         $this->template->write('my_data', rand(1000000, 9999999)); //data will be passed to variable $my_data in the view
+
+        $date_time  = $this->date->getDateTime(); // call Date library to get the current date and time
+        $this->template->write('date_time', $date_time); //$date_time will be passed to variable $date_time in the view
         
         $this->template->writeView('page_header', 'shared/header.html.php');
         $this->template->writeView('page_footer', 'shared/footer.html.php');      

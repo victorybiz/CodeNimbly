@@ -6,7 +6,6 @@
  * @subpackage  Libraries
  * @category	Libraries
  * @author		Victory Osayi Airuoyuwa
- * @link		http://codenimbly.com/doc/
  * @since       Version 1.0
  */
 class Database {
@@ -89,7 +88,7 @@ class Database {
     /**
      * Bind value to a Parameter
      * @param string $param : is the placeholder value that we will be using in our SQL statement, example :name.
-     * @param string $value : is the actual value that we want to bind to the placeholder, example “Vic Bob”.
+     * @param string $value : is the actual value that we want to bind to the placeholder, example ï¿½Vic Bobï¿½.
      * @param string $type  : is the datatype of the parameter, example string.
      */
     public function bindValue($param, $value, $type = null)

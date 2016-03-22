@@ -22,6 +22,7 @@
  * @package		CodeNimbly
  * @subpackage  Libraries
  * @category	Libraries
+ * @author		JF Nutbroek <jfnutbroek@gmail.com> http://www.mywebmymail.com
  * @since       Version 1.0
  */
 

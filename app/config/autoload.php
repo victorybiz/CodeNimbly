@@ -1,44 +1,48 @@
 <?php defined('PATH_ACCESS') or exit("NO DICE! Don't Play Too Smart.");
-/**
- * Autoload config
- * 
- * Autoload classes (Libraries and Model) with keys below. 
- * class key specified in $autoload doesn't need to be loaded again in the Controller.
- * But all libraries and model classes needed to work must must be registered in $registered_class;
- * NOTE: libraries and model class key must be a registered class in $registered_class array
 
- * @package		CodeNimbly
- * @subpackage  CodeNimbly
- * @category    Config
- * @since       Version 1.0
+/**
+ * Autoload config files, helper files and classes (Libraries and Model) with keys below. 
+ * class key specified in $autoload doesn't need to be loaded again in the Controller.
+ * But all libraries and model classes needed to work must all be registered in $registered_class;
+ * NOTE: libraries and model class key must be a registered class in $registered_class array
  */
  
+ 
+/** Autoload config files **/
+$autoload['configs'] = array(
+    //'config_filename',
+);
+
+/** Autoload libraries which keys here must be registered in $registered_class['libraries'] Below */
 $autoload['libraries'] = array(
-    'date', 'csrf', 'hash', // 'db', 
+    //'class_key',
+    'date', 'encryption',
 );
 
+/** Autoload models which keys here must be registered in $registered_class['models'] Below */
 $autoload['models'] = array(
-    //'classname_model',
+    //'class_key_model',
 );
 
+/** Autoload helper files */
 $autoload['helpers'] = array(
-    'config_helper', 'url_helper', 'csrf_helper', 'html_helper', 'date_helper',
+    //'filename_helper',
+     'my_custom_helper',
 );
+
 
 
 /** 
- * Registered Library Classes of autoloaded libraries class key above
+ * Registered Library Classes of autoloaded libraries class key Above
  */
 $registered_class['libraries'] = array(
     // 'class_key' => 'ClassName',
-    'db' => 'Database',
     'date' => 'Date',
-    'csrf' => 'CSRF',
-    'hash' => 'Hash',
+    'encryption' => 'Encryption',
 );
 
 /** 
- * Registered Model Classes of autoloaded libraries class key above
+ * Registered Model Classes of autoloaded model class key Above
  */
 $registered_class['models'] = array(
     // 'class_key_model' => 'ClassName',

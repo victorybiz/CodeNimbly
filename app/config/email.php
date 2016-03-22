@@ -1,26 +1,22 @@
 <?php defined('PATH_ACCESS') or exit("NO DICE! Don't Play Too Smart.");
-/** 
- * Email config 
- * 
- * @package		CodeNimbly
- * @subpackage  CodeNimbly
- * @category    Config
- * @since       Version 1.0
- */
- 
+
 /**
- * App Registered Email
- */
+|--------------------------------------------------------------------------
+| App Registered Email
+|--------------------------------------------------------------------------
+*/
 $config['email_info_email']         = 'info@domain.com'; 
 $config['email_noreply_email']      = 'noreply@domain.com'; 
 $config['email_error_log_email']    = 'error@domain.com';
 $config['email_copyright_email']    = 'copyright@domain.com'; 
 
 /**
- * App Email Settings.
- * see system/libraries/email.class.php AND system/libraries/phpmailer/ for 
- * more email configuration of Open Source PHPMailer
- */
+|--------------------------------------------------------------------------
+| App Email Settings.
+| see system/libraries/email.class.php AND system/libraries/phpmailer/ for 
+| more email configuration of Open Source PHPMailer
+|--------------------------------------------------------------------------
+*/
 if (SITE_ENV == 'production' || SITE_ENV == 'testing') { // PRODUCTION and TESTING Environment
     // PRODUCTION Environment Email Settings
     $config['smtp_echo_error']    = false; // Turn off failure error for production/ mode

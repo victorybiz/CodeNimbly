@@ -32,9 +32,10 @@ For *Apache*, edit your `.htaccess` file with the following:
 For *Nginx*, add the following to your server declaration:
 
 ```
-server {
-    location / {
-        try_files $uri $uri/ /index.php;
+# nginx configuration
+location / {
+    if (!-e $request_filename){
+        rewrite ^(.*)$ /index.php break;
     }
 }
 ```
@@ -47,3 +48,10 @@ server {
 
 Documentation coming soon.
 
+
+## Credits
+* [AltoRouter](http://altorouter.com)
+* [Mobile Detect](http://mobiledetect.net)
+* [EasyPhpThumbnail](http://www.mywebmymail.com)
+* [GeoPlugin](http://www.geoplugin.com/)
+* [Cal Henderson](http://appliedthinking.org/autolinking/)

@@ -1,13 +1,6 @@
 <?php defined('PATH_ACCESS') or exit("NO DICE! Don't Play Too Smart.");
 /** 
- * Timezones 
- * 
  * Array key and values of Timezones
- * 
- * @package		CodeNimbly
- * @subpackage  CodeNimbly
- * @category    Config
- * @since       Version 1.0
  */
 $config['timezones'] = array (
 

@@ -1,10 +1,9 @@
 # CodeNimbly HTACCESS
 <IfModule mod_rewrite.c>
     Options +FollowSymLinks
-    RewriteEngine On    
+    RewriteEngine On
     RewriteBase /
-    RewriteRule ^index\.php$ - [L]
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d    
-    RewriteRule . /index.php [NC,QSA,L]
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.php [QSA,L]
 </IfModule>

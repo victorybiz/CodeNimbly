@@ -85,7 +85,7 @@ class Stemmer
     {        
         $string = preg_replace('/ss+/i', '', $string);
         $string = trim($string); // trim the string
-        $string = preg_replace('/[^a-zA-Z0-9 -]/', '', $string); // only take alphanumerical characters, but keep the spaces and dashes too…
+        $string = preg_replace('/[^a-zA-Z0-9 -]/', '', $string); // only take alphanumerical characters, but keep the spaces and dashes tooï¿½
         $string = mb_strtolower($string); // make it lowercase
         
         preg_match_all('/\b.*?\b/i', $string, $match_words);

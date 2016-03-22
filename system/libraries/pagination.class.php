@@ -40,7 +40,7 @@ class Pagination {
 	var $prev_tag_close		       = '</span></li>';
 	var $num_tag_open		       = '<li class="numbers"><span>'; 
 	var $num_tag_close		       = '</li></span>'; 
-	var $page_query_string	       = false;
+	var $page_query_string	       = false; // set FALSE for friendly rewrite url or TRUE to use querystring type paging
 	var $paging_query_string_var   = 'page';
 	var $paging_query_string_var_value = 0;
 	var $display_pages		       = true;

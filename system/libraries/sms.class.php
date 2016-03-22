@@ -7,6 +7,7 @@
  * @package		CodeNimbly
  * @subpackage  Libraries
  * @category	Libraries
+ * @author		Victory Osayi Airuoyuwa
  * @since       Version 1.0
  */
 class SMS {
@@ -147,7 +148,7 @@ class SMS {
                                     
                                     //schedule message if specified
                                     if (! empty($send_time)) {                                    
-                                        //convert timestamp to UTC/GMT Date and Time format e.g “2 Jan 2008 6:30 PM” or “22 Dec 2009 22:31
+                                        //convert timestamp to UTC/GMT Date and Time format e.g ï¿½2 Jan 2008 6:30 PMï¿½ or ï¿½22 Dec 2009 22:31
                                         $send_time = date("j M Y g:i A", $send_time);
                                         //append to url
                                         $url .= '&sendtime=' . urlencode($send_time);
@@ -168,7 +169,7 @@ class SMS {
                 );
                         //schedule message if specified
                         if (! empty($send_time)) {                                    
-                            //convert timestamp to UTC/GMT Date and Time format e.g “2 Jan 2008 6:30 PM” or “22 Dec 2009 22:31
+                            //convert timestamp to UTC/GMT Date and Time format e.g ï¿½2 Jan 2008 6:30 PMï¿½ or ï¿½22 Dec 2009 22:31
                             $send_time = date("j M Y g:i A", $send_time);
                             //add to data to array
                             $data_for_post_method['sendtime'] = $send_time;
@@ -203,7 +204,7 @@ class SMS {
      * @param string The destination phone numbers coma separated for multiple numbers. e.g: 2348057055555,4470989777,913245678
      * @param string The SMS Message you wish to send. Maximum of 160 characters.
      * @param integer The type of the message either TEXT = 0 or FLASH = 1.
-     * @param string The UTC/GMT Date and Time when the message should be sent. A valid format is “2 Jan 2008 6:30 PM” or “22 Dec 2009 22:31”. If you ignore this parameter or put in a date that is in the past, the message would be sent immediately.
+     * @param string The UTC/GMT Date and Time when the message should be sent. A valid format is ï¿½2 Jan 2008 6:30 PMï¿½ or ï¿½22 Dec 2009 22:31ï¿½. If you ignore this parameter or put in a date that is in the past, the message would be sent immediately.
      * @return array MESSAGEID  -or- ERROR DESCRIPTION 
      */
     public function send_quick_message($owner_email = '', $sub_account = '', $sub_account_password = '', $execute_api_commands_via = 'curl', $submit_api_data_via = 'post', $sender, $send_to, $message, $message_type = 0, $send_time = '')
@@ -227,7 +228,7 @@ class SMS {
                                 
                                 //schedule message if specified
                                 if (! empty($send_time)) {                                    
-                                    //convert timestamp to UTC/GMT Date and Time format e.g “2 Jan 2008 6:30 PM” or “22 Dec 2009 22:31
+                                    //convert timestamp to UTC/GMT Date and Time format e.g ï¿½2 Jan 2008 6:30 PMï¿½ or ï¿½22 Dec 2009 22:31
                                     $send_time = date("j M Y g:i A", $send_time);
                                     //append to url
                                     $url .= '&sendtime=' . urlencode($send_time);
@@ -250,7 +251,7 @@ class SMS {
             );
                     //schedule message if specified
                     if (! empty($send_time)) {                                    
-                        //convert timestamp to UTC/GMT Date and Time format e.g “2 Jan 2008 6:30 PM” or “22 Dec 2009 22:31
+                        //convert timestamp to UTC/GMT Date and Time format e.g ï¿½2 Jan 2008 6:30 PMï¿½ or ï¿½22 Dec 2009 22:31
                         $send_time = date("j M Y g:i A", $send_time);
                         //add to data to array
                         $data_for_post_method['sendtime'] = $send_time;
@@ -545,12 +546,12 @@ class SMS {
      * 
      * This require authentication session_id i.e a call to login() function before this function
      * 
-     * @param integer PageSize is the number of rows to return at once. Minimum value is 5 and maximum is 300, default is 5.Messages are returned in “pages”. 
-     * @param integer PageNumber is the current “page” of rows to return. Default value is 1. If PageSize is 100 and PageNumber is 3 then rows 201 to 300 is returned
+     * @param integer PageSize is the number of rows to return at once. Minimum value is 5 and maximum is 300, default is 5.Messages are returned in ï¿½pagesï¿½. 
+     * @param integer PageNumber is the current ï¿½pageï¿½ of rows to return. Default value is 1. If PageSize is 100 and PageNumber is 3 then rows 201 to 300 is returned
      * @param integer Unix Timestamp - BeginDate is the first date. Search Messages that fall between a date range.  This parameter is required.
      * @param integer Unix Timestamp - EndDate is the second date. Search Messages that fall between a date range.  This parameter is required.
-     * @param string SenderID, You may choose to return Messages that have a specific SenderID. Leave blank if you don’t care about specific SenderID.
-     * @param string Message content, You may choose to return Messages that have a specific content. Leave blank if you don’t care about specific text.
+     * @param string SenderID, You may choose to return Messages that have a specific SenderID. Leave blank if you donï¿½t care about specific SenderID.
+     * @param string Message content, You may choose to return Messages that have a specific content. Leave blank if you donï¿½t care about specific text.
      * @return [TOTALROWS] [RAW DATA RETURNED AS XML/XLS/CSV] -or- [ERROR DESCRIPTION]
      */
     public function get_sent_message($page_size = 5, $page_number = 1, $begin_date = '', $end_date = '', $sender_id = '', $contains_content = '')
@@ -565,8 +566,8 @@ class SMS {
                                             . '&sessionid=' . urlencode($this->session_id)
                                             . '&pagesize=' . urlencode($page_size)
                                             . '&pagenumber=' . urlencode($page_number)
-                                            . '&begindate=' . urlencode(date("j M Y g:i A", $begin_date)) //convert timestamp to UTC/GMT Date and Time format e.g “2 Jan 2008 6:30 PM” or “22 Dec 2009 22:31
-                                            . '&enddate=' . urlencode(date("j M Y g:i A", $end_date)); //convert timestamp to UTC/GMT Date and Time format e.g “2 Jan 2008 6:30 PM” or “22 Dec 2009 22:31
+                                            . '&begindate=' . urlencode(date("j M Y g:i A", $begin_date)) //convert timestamp to UTC/GMT Date and Time format e.g ï¿½2 Jan 2008 6:30 PMï¿½ or ï¿½22 Dec 2009 22:31
+                                            . '&enddate=' . urlencode(date("j M Y g:i A", $end_date)); //convert timestamp to UTC/GMT Date and Time format e.g ï¿½2 Jan 2008 6:30 PMï¿½ or ï¿½22 Dec 2009 22:31
                                         
                                         if (! empty($sender_id)) {                
                                             //append to url if any
@@ -587,8 +588,8 @@ class SMS {
                                         'sessionid' => $this->session_id,
                                         'pagesize' => $page_size,
                                         'pagenumber' => $page_number,
-                                        'begindate' => urlencode(date("j M Y g:i A", $begin_date)), //convert timestamp to UTC/GMT Date and Time format e.g “2 Jan 2008 6:30 PM” or “22 Dec 2009 22:31
-                                        'enddate' => urlencode(date("j M Y g:i A", $end_date))   //convert timestamp to UTC/GMT Date and Time format e.g “2 Jan 2008 6:30 PM” or “22 Dec 2009 22:31
+                                        'begindate' => urlencode(date("j M Y g:i A", $begin_date)), //convert timestamp to UTC/GMT Date and Time format e.g ï¿½2 Jan 2008 6:30 PMï¿½ or ï¿½22 Dec 2009 22:31
+                                        'enddate' => urlencode(date("j M Y g:i A", $end_date))   //convert timestamp to UTC/GMT Date and Time format e.g ï¿½2 Jan 2008 6:30 PMï¿½ or ï¿½22 Dec 2009 22:31
                 );
                                 if (! empty($sender_id)) {                                    
                                     //add to data to array if any

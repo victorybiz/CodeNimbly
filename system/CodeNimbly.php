@@ -1,19 +1,18 @@
 <?php defined('PATH_ACCESS') or exit("NO DICE! Don't Play Too Smart.");
 /**
- * CodeNimbly
+ * CodeNimbly 1.0
  *
  * An extensible micro HMVC framework for PHP newbies and crafters.
  *
  * @package		CodeNimbly
- * @author		Victory Osayi Airuoyuwa <Lavictorybiz@gmail.com>
- * @copyright	Copyright (c) 2015, Victory Osayi Airuoyuwa, Compudeluxe Solutions Ltd. <http://www.compudeluxe.com>
- * @license		http://codenimbly.compudeluxe.com/doc/license.html
- * @link		http://codenimbly.compudeluxe.com
+ * @author		Victory Osayi Airuoyuwa (@victorybiz) <Lavictorybiz@gmail.com>
+ * @copyright	Copyright (c) 2015-2016, Victory Osayi Airuoyuwa (@victorybiz) <Lavictorybiz@gmail.com>
+ * @link        https://github.com/victorybiz/CodeNimbly
+ * @license		MIT, https://github.com/victorybiz/CodeNimbly/blob/master/LICENSE.txt
  * @since		Version 1.0
- */
- 
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ *
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * System Initialization File
  *
@@ -21,64 +20,59 @@
  *
  * @package		CodeNimbly
  * @subpackage  CodeNimbly
- * @author		Victory Osayi Airuoyuwa
- * @link		http://codenimbly.com/doc/
  */
 
-// get the config files
-require_once(DIR_APP_PATH . "/config/config.php");
-// get the URL Routes file
-require_once(DIR_BASE_PATH . "/routes.php"); 
-// get the registry. 
-require_once(DIR_SYSTEM_PATH . "/core/registry.class.php");
-require_once(DIR_SYSTEM_PATH . "/core/controller.class.php");
-require_once(DIR_SYSTEM_PATH . "/core/model.class.php");
-require_once(DIR_SYSTEM_PATH . "/core/router.class.php");
+/** Include the Regustry class file which is the core power of the framwork */
+require_once(DIR_SYSTEM_PATH . DS."core".DS."registry.class.php");
+// initialise the Registry 
+$Registry = CodeNimbly\Core\Registry::init();
 
-global $registered_class, $autoload;
-// initialise the Registry
-$Registry =& CodeNimbly\Core\Registry::init();
-// register and load the core classes
+/** load core basic Configuration files needed for framework to function by default... Arranged based on dependency */
+$Registry->loadConfig('app');
+$Registry->loadConfig('email');
+$Registry->loadConfig('autoload');
+$Registry->loadConfig('database');
+$Registry->loadConfig('constants');
+$Registry->loadConfig('timezones');
+$Registry->loadConfig('template');
+$Registry->loadConfig('language');
+// pass and autoload the other config files (specified in config)
+$Registry->loadConfig($autoload['configs']);
+
+/** Include other core files which is also the core power of the framwork */
+require_once(DIR_BASE_PATH . DS."routes.php"); // Include the URL Routes file
+require_once(DIR_SYSTEM_PATH . DS."core".DS."controller.class.php");
+require_once(DIR_SYSTEM_PATH . DS."core".DS."model.class.php");
+require_once(DIR_SYSTEM_PATH . DS."core".DS."router.class.php");
+
+// register and load the core classes needed for framework to function by default
 $Registry->registerCoreClass('Config', 'config', true);
+$Registry->registerCoreClass('Language', 'language', true);
 $Registry->registerCoreClass('Template', 'template', true);
-// pass the classes to be registered and autoloaded
+
+//register and load basic library class needed for framework to function by default (Order by dependency)
+$Registry->registerLibrary('Session', 'session', true); //session lib comes first
+$Registry->registerLibrary('Security', 'security', true);  
+$Registry->registerLibrary('Request', 'request', true);  
+
+//load basic helper files to lib above needed for framework to function by default
+$Registry->loadHelper(array('config_helper', 'security_helper', 'language_helper', 'url_helper'));
+
+// pass the classes to be registered and autoloaded including the helpers (specified in config)
 $Registry->registerClasses($registered_class);
 $Registry->loadLibrary($autoload['libraries']);
 $Registry->loadModel($autoload['models']);
 $Registry->loadHelper($autoload['helpers']);
+ 
 
 
 /**
- * Perform URL Routing to Controller and method
+ * Run URL Routing and Dispatching to Controller and method
  */
 $Router = new CodeNimbly\Core\Router();
+// set route base path
 $Router->setBasePath(ROUTE_BASE_PATH);
-//Add the url url_route arrays from the url routes files
-$Router->addRoutes($routes);
-/* Match the current request */
-$match = $Router->match();
+// Run dispatch routes
+$Router->dispatch($routes,  DIR_APP_PATH . DS.'controllers'.DS, '');
 
-if($match) {    
-    list($match_class_path, $match_method) = explode('@', $match['target']);
-    $segments = explode('/', $match_class_path);
-    if (is_array($segments)) { 
-        $seg_num = count($segments);
-        $match_class = $segments[$seg_num - 1];   
-    } else { 
-        // Do Nothing and allow file_exists() to check for existence
-    }       
-    //include the controller class
-    $controller_path  = DIR_APP_PATH . '/controllers/' . $match_class_path . '.php';    
-    if (file_exists($controller_path)) {        
-        require_once($controller_path);                 
-        $objController = new $match_class;
-        $objController->$match_method($match['params']);
-    } else {
-        exit("Controller \"$match_class\" doesn't exist.");
-    }   
-} else {     
-    /** ERORR 404: PAGE NOT FOUND */
-    header("HTTP/1.0 404 Not Found");
-    require_once('404.php');
-    exit;
-}
+

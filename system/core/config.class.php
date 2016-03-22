@@ -15,25 +15,15 @@ class Config {
     
     public function __construct()
     {
-        //get the values of the $config variable arrays in Congfig_*.php files
+        //get the values of the $config variable arrays in app/config/*.php files
         global $config;
         $this->config  =& $config;
     }
     
-    public function set($index, $value, $replace = false)
+    public function set($index, $value)
     {
-        if ($replace === true) {
-            $this->config[$index] = $value;
-            return $this->config[$index];
-        } else {
-            if (!isset($this->config[$index])) {
-                $this->config[$index] = $value;
-                return $this->config[$index];
-            } else {
-                echo "Config index: \"$index\" already assigned. Params: replace set false";
-                exit;
-            }
-        }   
+        $this->config[$index] = $value;
+        return $this->config[$index];
     }
     
     public function get($index)
@@ -41,8 +31,7 @@ class Config {
         if (isset($this->config[$index])) {
             return $this->config[$index];
         } else {
-            echo "Config index: \"$index\" does not exist";
-            exit;
+            return null;
         }
     }
     
