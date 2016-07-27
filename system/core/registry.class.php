@@ -38,7 +38,7 @@ class Registry {
     
     public static function loadConfig($config_file)
     {
-        global $config, $autoload, $registered_class; // declare global usage of the variables in the config files        
+        global $config, $autoload, $registered_class, $routes; // declare global usage of the variables in the config files        
         if (!is_array($config_file)) {
             //Load from the config in the application directory 
             if (file_exists(DIR_APP_PATH . DS . 'config' . DS . strtolower($config_file) . '.php')) {

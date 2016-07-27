@@ -1,8 +1,8 @@
 <?php defined('PATH_ACCESS') or exit("NO DICE! Don't Play Too Smart.");
 /**
- * Home Model
+ * User Model
  */
-class Home_Model extends Model {
+class User_Model extends Model {
     
     public function __construct() {
         parent::__construct();

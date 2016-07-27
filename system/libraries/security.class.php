@@ -159,7 +159,7 @@ class Security {
 				$data[$this->xssFilter($key)] = $this->xssFilter($value);
 			}
 		} else {
-			$data = htmlspecialchars($data, ENT_COMPAT, 'UTF-8');
+			$data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
 		}
 		return $data;
     }

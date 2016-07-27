@@ -72,7 +72,15 @@ class Database {
     private function _errorHandler($error_message='') 
     {
         $this->error = $error_message;
-        echo $error_message;
+        if (defined('SITE_ENV')) {
+            if (SITE_ENV == 'production') {
+                echo 'Could not connect to database server.';
+            } else {
+                echo $error_message;
+            }
+        } else {
+           echo $error_message; 
+        }        
         exit;
     }
     
@@ -149,7 +157,11 @@ class Database {
      */
     public function fetchAll()
     {
-        return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($this->countRow()){
+            return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return array();
+        }
     }    
     
     /**
@@ -157,7 +169,11 @@ class Database {
      */
     public function fetch()
     {
-        return $this->stmt->fetch(PDO::FETCH_ASSOC);
+        if ($this->countRow()){
+            return $this->stmt->fetch(PDO::FETCH_ASSOC);
+        } else {
+            return array();
+        }
     }
     
     /**

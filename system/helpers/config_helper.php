@@ -19,6 +19,14 @@ if (! function_exists('get_config')) {
 	}
 }
 
+if (! function_exists('get_config_all')) {
+	function get_config_all()
+    {   
+        global $Registry;
+		return $Registry->config->get_all();
+	}
+}
+
 if (! function_exists('set_config')) {
 	function set_config($index, $value, $replace = false)
     {   

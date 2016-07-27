@@ -152,4 +152,57 @@ class Request {
         }
         return $value;
     }
+    
+    /**
+     *  POST Call to RESTful API
+     * 
+     * @param string $api_url : The URL to call
+     * @param array $post_data : Array of data to send  
+     * @return mixed
+     */
+    public function restfulPost($api_url, $post_data) 
+    {
+        // create a new cURL resource
+        $resource_ch = curl_init();           
+        // set appropriate options
+        curl_setopt($resource_ch, CURLOPT_URL, $api_url);
+        curl_setopt($resource_ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($resource_ch, CURLOPT_RETURNTRANSFER, TRUE); //allow it to return transfer response
+        curl_setopt($resource_ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($resource_ch, CURLOPT_POST, TRUE); //send via HTTP POST Method
+        curl_setopt($resource_ch, CURLOPT_POSTFIELDS, $post_data); //Array of data to send            
+        // grab URL and pass it to the browser and get the return transfer
+        $response = curl_exec($resource_ch);           
+        // close cURL resource, and free up system resources
+        curl_close($resource_ch);
+        
+        return $response;
+    }
+    
+    
+    /**
+     *  POST Call to RESTful API
+     * 
+     * @param string $api_url : The URL to call
+     * @param array $post_data : Array of data to send  
+     * @return mixed
+     */
+    public function restfulGet($api_url) 
+    {
+        // create a new cURL resource
+        $resource_ch = curl_init();           
+        // set appropriate options
+        curl_setopt($resource_ch, CURLOPT_URL, $api_url);
+        curl_setopt($resource_ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($resource_ch, CURLOPT_RETURNTRANSFER, TRUE); //allow it to return transfer response
+        curl_setopt($resource_ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        // grab URL and pass it to the browser and get the return transfer
+        $response = curl_exec($resource_ch);           
+        // close cURL resource, and free up system resources
+        curl_close($resource_ch);
+        
+        return $response;
+    }    
+    
+    
  } // end of class

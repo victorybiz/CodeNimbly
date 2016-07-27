@@ -13,7 +13,17 @@ $config['template_active_theme'] = 'default';
 | no data is assigned to them to avoid undefined variable error flashing
 |--------------------------------------------------------------------------
 */
-$config['template_region_vars'] = array (
+$config['template_region_vars']['default'] = array (
+    'page_title',
+    'page_header',
+    'page_sidebar',
+    'page_footer',
+    'meta_description',
+    'meta_keywords',
+    'meta_author',
+);
+
+$config['template_region_vars']['admin'] = array (
     'page_title',
     'page_header',
     'page_sidebar',

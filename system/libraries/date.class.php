@@ -11,6 +11,28 @@
 class Date
 {
     /**
+     * Class Constructor
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        global $Registry; //use core global variable $Registry
+        
+        $timezone = $Registry->config->get('default_timezone');
+        
+        if (isset($timezone) && !empty($timezone)) {
+            date_default_timezone_set($timezone);         
+        }
+        
+        //Load the helper file 
+        $Registry->loadHelper('date_helper');
+    }
+    
+    
+    
+    
+    /**
     * Covert Date or DateTime to integer Timestamp
     * 
     * @param string $date: Date (2013-12-30) or DateTime (2013-12-31 12:30:58)
@@ -18,13 +40,14 @@ class Date
     */
     function toTimestamp($date) 
     {
+        $date = trim($date);
         // if $date is Date (2013-12-30)
-        if (preg_match("/^([0-9]{4})-((0[1-9])|(1[0-2]))-(([0-2][1-9])|(3[0-1]))$/", $date)) {
+        if (preg_match("/^([0-9]{4})\-((0[1-9])|(1[0-2]))\-((0[1-9])|([1-2][0-9])|(3[0-1]))$/", $date)) {
             list($year, $month, $day) = explode('-', $date);
             $timestamp = mktime(0, 0, 0, $month, $day, $year);        
        
         // if $date is DateTime (2013-12-31 12:30:58)
-        } elseif (preg_match("/^([0-9]{4})-((0[1-9])|(1[0-2]))-(([0-2][1-9])|(3[0-1])) ([0-2][0-9]):([0-5][0-9]):([0-5][0-9])$/", $date)) {
+        } elseif (preg_match("/^([0-9]{4})\-((0[1-9])|(1[0-2]))\-((0[1-9])|([1-2][0-9])|(3[0-1])) (([0-9])|([0-1][0-9])|(2[0-3])):([0-5][0-9]):([0-5][0-9])$/", $date)) {
             list($date_part, $time_part) = explode(' ', $date);
             list($year, $month, $day) = explode('-', $date_part);
             list($hour, $minute, $second) = explode(':', $time_part);

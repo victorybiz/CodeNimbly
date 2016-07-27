@@ -2,6 +2,8 @@
 
 An extensible micro HMVC framework for PHP newbies and crafters.
 
+"Coded" with love in Nigeria.
+
 ## Requirements
 * PHP 5.4 or greater
 * Apache mod_rewrite module

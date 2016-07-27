@@ -68,13 +68,63 @@ class Router {
 		if(!is_array($routes)) {
 			exit('Routes should be an array');
 		} 
-		foreach($routes as $route) {
+		foreach($routes as $route) { 
+		    //group routing mapping
+            if (isset($route['prefix'])) {
+                if (!isset($route['target_prefix']) || !isset($route['group_routes'])) {
+                        exit("Group Routes should have a prefix, target_prefix and routes. E.g: <br>
+                            \$routes[] = array('prefix'=>'admin', 'target_prefix'=>'backend', 'routes'=> function() {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp; \$routes[] = array('GET', '/', 'Controller@Method');<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp; \$routes[] = array('GET', '/', 'Controller@Method');<br>
+                            });
+                        ");
+                } else {
+                    $prefix         = $route['prefix'];
+                    $target_prefix  = $route['target_prefix'];
+                    $group_routes   = $route['group_routes'];
+                    //$group_routes is a Closure Obect representing a function, get the return value
+                    $group_routes   = $group_routes();
+                    //loop through and map each routes in the group routes
+                    foreach($group_routes as $g_route) {
+                        $method = $g_route[0];
+                        $_route = $g_route[1];
+                        $target = $g_route[2];
+                        $name   = (isset($g_route[3])) ? $g_route[3] : null;
+                        // add preceeding / to prefix if noon
+                        $prefix = (substr($prefix, 0, 1) != '/')?  "/$prefix" : $prefix;
+                        // remove proceeding and trailing / from prefix if any
+                        $prefix = (substr($prefix, -1, 1) == '/')?  substr($prefix,0,strlen($prefix)-2) : $prefix;
+                        // remove preceeding / from target prefix if any
+                        $target_prefix = (substr($target_prefix, 0, 1) == '/')?  substr($target_prefix,1,strlen($target_prefix)-1) : $target_prefix;
+                        // add proceeding and trailing / to target prefix if noon
+                        $target_prefix = (substr($target_prefix, -1, 1) != '/')?  "$target_prefix/" : $target_prefix;
+                        
+                        //prepend the prefix to the group routes and target prefix to the targets
+                        $_route = $prefix . $_route;
+                        $target = $target_prefix . $target;
+                        //map a route
+                        $this->map($method, $_route, $target, $name);
+            		}
+                }
+            } else {
+                //single routes mapping
+                $method = $route[0];
+                $_route = $route[1];
+                $target = $route[2];
+                $name   = (isset($route[3])) ? $route[3] : null;
+                //map a route
+                $this->map($method, $_route, $target, $name);
+            }      
+		}
+        /*
+        foreach($routes as $route) {
             $method = $route[0];
             $_route = $route[1];
             $target = $route[2];
             $name   = (isset($route[3])) ? $route[3] : null;
             $this->map($method, $_route, $target, $name);
 		}
+        */
 	}
 
 	/**

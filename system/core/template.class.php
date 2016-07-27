@@ -13,6 +13,7 @@ class Template {
 
 	protected $config;
 	protected $page_vars = array();
+    protected $active_theme;
     protected $active_theme_path;
     protected $output_page;
 
@@ -22,15 +23,25 @@ class Template {
         global $config;
         $this->config  =& $config;
         
-        $this->active_theme_path = DIR_APP_PATH . '/views/' . $this->config['template_active_theme'];
-        
-        if (is_array($this->config['template_region_vars'])) {
-            foreach ($this->config['template_region_vars'] as $var) {
-                $this->page_vars[$var] = '';
-            }
-        }        
+        $this->setActiveTheme($this->config['template_active_theme']);
+               
 	}
     
+    public function setActiveTheme($theme) 
+    {        
+        $this->active_theme        = $theme;
+        $this->active_theme_path    = DIR_APP_PATH . '/views/' . $this->active_theme;          
+        $this->setRegionVars();
+    }    
+    
+    private function setRegionVars() 
+    {
+        if (isset($this->config['template_region_vars'][$this->active_theme]) && is_array($this->config['template_region_vars'][$this->active_theme])) {
+            foreach ($this->config['template_region_vars'][$this->active_theme] as $var) {
+                $this->page_vars[$var] = '';
+            }
+        } 
+    }
     
     private function startBuffering()
     {

@@ -49,63 +49,88 @@ if (! function_exists('current_page_url')) {
 
 
 if (! function_exists('js_url')) {
-	function js_url($uri = '')
+	function js_url($uri = '', $append_static_content_version = true)
     {   
         global $Registry;
 		$js_url = $Registry->config->get('js_url');
+        $uri = trim($uri);
         if (substr($js_url, -1, 1) != '/')  {
             $js_url .= '/';
         }
-        return $js_url . $uri;
+        $js_url .= $uri;
+        if ($append_static_content_version === true && !empty($uri)) {
+            $js_url .= "?v=" . STATIC_CONTENT_VERSION;
+        }
+        return $js_url;
 	}
 }
 
 if (! function_exists('css_url')) {
-	function css_url($uri = '')
+	function css_url($uri = '', $append_static_content_version = true)
     {   
         global $Registry;
 		$css_url = $Registry->config->get('css_url');
+        $uri = trim($uri);
         if (substr($css_url, -1, 1) != '/')  {
             $css_url .= '/';
         }
-        return $css_url . $uri;
+        $css_url .= $uri;
+        if ($append_static_content_version === true && !empty($uri)) {
+            $css_url .= "?v=" . STATIC_CONTENT_VERSION;
+        }
+        return $css_url;
 	}
 }
 
 
 if (! function_exists('images_url')) {
-	function images_url($uri = '')
+	function images_url($uri = '', $append_static_content_version = true)
     {   
         global $Registry;
 		$images_url = $Registry->config->get('images_url');
+        $uri = trim($uri);
         if (substr($images_url, -1, 1) != '/')  {
             $images_url .= '/';
         }
-        return $images_url . $uri;
+        $images_url .= $uri;
+        if ($append_static_content_version === true && !empty($uri)) {
+            $images_url .= "?v=" . STATIC_CONTENT_VERSION;
+        }
+        return $images_url;
 	}
 }
 
 if (! function_exists('third_party_url')) {
-	function third_party_url($uri = '')
+	function third_party_url($uri = '', $append_static_content_version = true)
     {   
         global $Registry;
 		$third_party_url = $Registry->config->get('third_party_url');
+        $uri = trim($uri);
         if (substr($third_party_url, -1, 1) != '/')  {
             $third_party_url .= '/';
         }
-        return $third_party_url . $uri;
+        $third_party_url .= $uri;
+        if ($append_static_content_version === true && !empty($uri)) {
+            $third_party_url .= "?v=" . STATIC_CONTENT_VERSION;
+        }
+        return $third_party_url;
 	}
 }
 
 if (! function_exists('uploads_url')) {
-	function uploads_url($uri = '')
+	function uploads_url($uri = '', $append_static_content_version = true)
     {   
         global $Registry;
 		$uploads_url = $Registry->config->get('uploads_url');
+        $uri = trim($uri);
         if (substr($uploads_url, -1, 1) != '/')  {
             $uploads_url .= '/';
         }
-        return $uploads_url . $uri;
+        $uploads_url .= $uri;
+        if ($append_static_content_version === true && !empty($uri)) {
+            $uploads_url .= "?v=" . STATIC_CONTENT_VERSION;
+        }
+        return $uploads_url;
 	}
 }
 

@@ -36,11 +36,11 @@ $Registry->loadConfig('constants');
 $Registry->loadConfig('timezones');
 $Registry->loadConfig('template');
 $Registry->loadConfig('language');
+$Registry->loadConfig('routes'); // Load the URL Routes file
 // pass and autoload the other config files (specified in config)
 $Registry->loadConfig($autoload['configs']);
 
 /** Include other core files which is also the core power of the framwork */
-require_once(DIR_BASE_PATH . DS."routes.php"); // Include the URL Routes file
 require_once(DIR_SYSTEM_PATH . DS."core".DS."controller.class.php");
 require_once(DIR_SYSTEM_PATH . DS."core".DS."model.class.php");
 require_once(DIR_SYSTEM_PATH . DS."core".DS."router.class.php");
@@ -56,7 +56,9 @@ $Registry->registerLibrary('Security', 'security', true);
 $Registry->registerLibrary('Request', 'request', true);  
 
 //load basic helper files to lib above needed for framework to function by default
-$Registry->loadHelper(array('config_helper', 'security_helper', 'language_helper', 'url_helper'));
+$Registry->loadHelper(array(
+    'core_helper', 'config_helper', 'security_helper', 'language_helper', 'url_helper', 'html_helper', 'form_helper'
+));
 
 // pass the classes to be registered and autoloaded including the helpers (specified in config)
 $Registry->registerClasses($registered_class);

@@ -17,7 +17,7 @@ class Geo_Location {
 	var $host = 'http://www.geoplugin.net/php.gp?ip={IP}&base_currency={CURRENCY}';
 		
 	//the default base currency
-	var $currency = 'USD';
+	var $currency = 'NGN';
 	
 	//initiate the geoPlugin vars
 	var $ip = null;
@@ -29,11 +29,26 @@ class Geo_Location {
 	var $countryName = null;
 	var $continentCode = null;
 	var $continentName = null;
+	var $location = null;
 	var $latitude = null;
 	var $longitude = null;
 	var $currencyCode = null;
 	var $currencySymbol = null;
 	var $currencyConverter = null;
+    
+    
+    /**
+     * Class Constructor
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        global $Registry; //use core global variable $Registry
+    
+        //Load the helper file 
+        $Registry->loadHelper('geo_location_helper');
+    }
       
 	/**
      * Get user's IP
@@ -42,7 +57,7 @@ class Geo_Location {
      * @param string $set_localhost_ip_as : To avoid invalid local IP, Set an IP to display when running this class locally on your PC because localhost IP is ::1" OR  "127.0.0.1"
      * @return string
      */
-	public function ip($deep_detect = true, $set_localhost_ip_as = '105.112.26.142') 
+	public function ip($deep_detect = true, $set_localhost_ip_as = '169.159.82.111') 
     {
         global $_SERVER;
         
@@ -94,37 +109,48 @@ class Geo_Location {
 		
 		$response = $this->fetch($host);
 		
-		$data = unserialize($response);
-		
-		//set the geoPlugin vars
-		$this->ip = $ip;
-		$this->city = $data['geoplugin_city'];
-		$this->region = $data['geoplugin_region'];
-		$this->areaCode = $data['geoplugin_areaCode'];
-		$this->dmaCode = $data['geoplugin_dmaCode'];
-		$this->countryCode = $data['geoplugin_countryCode'];
-		$this->countryName = $data['geoplugin_countryName'];
-		$this->continentCode = $data['geoplugin_continentCode'];
-		$this->latitude = $data['geoplugin_latitude'];
-		$this->longitude = $data['geoplugin_longitude'];
-		$this->currencyCode = $data['geoplugin_currencyCode'];
-		$this->currencySymbol = $data['geoplugin_currencySymbol'];
-		$this->currencyConverter = $data['geoplugin_currencyConverter'];
-        
-        $continents = array(
-            "AF" => "Africa",
-            "AN" => "Antarctica",
-            "AS" => "Asia",
-            "EU" => "Europe",
-            "OC" => "Australia (Oceania)",
-            "NA" => "North America",
-            "SA" => "South America"
-        );
-        ;
-        $this->continentName = @$continents[strtoupper($data['geoplugin_continentCode'])];
-		
+        if ($response !== false) {
+            
+            $data = @unserialize($response);
+    		
+    		//set the geoPlugin vars
+    		$this->ip = $ip;
+    		$this->city = $data['geoplugin_city'];
+    		$this->region = $data['geoplugin_region'];
+    		$this->areaCode = $data['geoplugin_areaCode'];
+    		$this->dmaCode = $data['geoplugin_dmaCode'];
+    		$this->countryCode = $data['geoplugin_countryCode'];
+    		$this->countryName = $data['geoplugin_countryName'];
+    		$this->continentCode = $data['geoplugin_continentCode'];
+    		$this->latitude = $data['geoplugin_latitude'];
+    		$this->longitude = $data['geoplugin_longitude'];
+    		$this->currencyCode = $data['geoplugin_currencyCode'];
+    		$this->currencySymbol = $data['geoplugin_currencySymbol'];
+    		$this->currencyConverter = $data['geoplugin_currencyConverter'];
+            
+            $continents = array(
+                "AF" => "Africa",
+                "AN" => "Antarctica",
+                "AS" => "Asia",
+                "EU" => "Europe",
+                "OC" => "Australia (Oceania)",
+                "NA" => "North America",
+                "SA" => "South America"
+            );
+            ;
+            $this->continentName = @$continents[strtoupper($data['geoplugin_continentCode'])];
+            //arrange a full location text
+            $location       = '';
+            $city_name      = $this->city;
+            $location       = (!empty($city_name))? "$location $city_name," : $location;
+            $region_name    = $this->region;
+            $location       = (!empty($region_name))? "$location $region_name," : $location;
+            $country_name   = $this->countryName;
+            $location       = (!empty($country_name))? "$location $country_name" : $location;
+            $this->location = $location;
+        }
 	}
-	
+    
     /**
      * Fetch URL data
      * 

@@ -73,14 +73,28 @@ class Session {
         // Do session Garbage Collection (GC) settings
         ini_set('session.gc_probability', 1); 
         ini_set('session.gc_divisor', 100);
-        ini_set('session.gc_maxlifetime', 3600);
+        ini_set('session.gc_maxlifetime', 1800); //3600
         
         // if no session exist, start the session
         if(session_id() == '') {
             session_start();
         }
+        
+        //Load the helper file 
+        $Registry->loadHelper('session_helper');
     }
 	
+    
+    /**
+     *  Initialize session: call to constructor.
+     * 
+     * @return void
+     */
+    public function init() 
+    {
+        $this->__construct();
+    }
+    
     
     /**
      *  Set SESSION data.

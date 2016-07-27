@@ -11,6 +11,14 @@
  * $routes[] = array('GET|POST', '/profile/{alpha]:username}/', 'path/to/ControllerClassName@methodToCall'); 
  * $routes[] = array('GET|POST', '/profile/{[0-9]+:user_id}/', 'path/to/ControllerClassName@methodToCall'); 
  * 
+ * Grou Routing
+ * $routes[] = array('prefix'=>'admin', 'target_prefix'=>'backend', 'group_routes'=> function() {
+ *     
+ *     $routes[] = array('GET|POST', '/?', 'Dashboard@index'); // http://domain.com/admin/ TO: bankend/Dashboard@index
+ *     $routes[] = array('GET|POST', '/login/?', 'Login@index'); // http://domain.com/admin/login/ TO: bankend/Login@index
+ *     return $routes;    
+ * });
+ *  
  * MATCH TYPE AND SHORT-HAND
  * {name}                    // Catch all as 'name'
  * {num:id}                  // Match integer/numbers as 'id'

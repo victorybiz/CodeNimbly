@@ -35,5 +35,11 @@ class Config {
         }
     }
     
+    public function get_all()
+    {
+        return $this->config;
+    }
+    
+    
 }
 

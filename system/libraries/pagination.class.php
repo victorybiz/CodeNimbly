@@ -23,23 +23,23 @@ class Pagination {
 	var $prev_link                 = '<span aria-hidden="true"> &laquo; Prev</span>';
 	var $next_link			       = '<span aria-hidden="true">Next &raquo;</span>';
 	var $last_link			       = '<span aria-hidden="true">Last &rarr;</span>';
-	var $full_tag_open		       = '<nav> <ul class="pagination pagination-lg">'; //'<div class="pagination">';
-	var $full_tag_close		       = '</ul></nav>'; //'</div>';
+	var $full_tag_open		       = '<ul class="pagination">'; //'<ul class="pagination pagination-lg">';
+	var $full_tag_close		       = '</ul>'; //'</ul>';
     var $statistic_tag_open	       = '<div class="pagination_statistic">';
 	var $statistic_tag_close       = '</div>';
-	var $first_tag_open		       = '<li class="first"><span>';
-	var $first_tag_close	       = '</span></li>';
-	var $last_tag_open		       = '<li class="last"><span>';
-	var $last_tag_close		       = '</span></li>';
+	var $first_tag_open		       = '<li class="first">'; 
+	var $first_tag_close	       = '</li>';  
+	var $last_tag_open		       = '<li class="last">';
+	var $last_tag_close		       = '</li>'; 
 	var $first_url			       = ''; // Alternative URL for the First Page.
-	var $cur_tag_open		       = '<li class="active current"><span>';
-	var $cur_tag_close		       = '</span></li>';
-	var $next_tag_open		       = '<li><span class="next">';
-	var $next_tag_close		       = '</span></li>';
-	var $prev_tag_open		       = '<li><span class="prev">';
-	var $prev_tag_close		       = '</span></li>';
-	var $num_tag_open		       = '<li class="numbers"><span>'; 
-	var $num_tag_close		       = '</li></span>'; 
+	var $cur_tag_open		       = '<li class="active current"><a>'; // <li class="active current"><span>
+	var $cur_tag_close		       = '</a></li>';
+	var $next_tag_open		       = '<li class="next">';  
+	var $next_tag_close		       = '</li>';
+	var $prev_tag_open		       = '<li class="prev">';
+	var $prev_tag_close		       = '</li>';
+	var $num_tag_open		       = '<li class="numbers">'; 
+	var $num_tag_close		       = '</li>'; 
 	var $page_query_string	       = false; // set FALSE for friendly rewrite url or TRUE to use querystring type paging
 	var $paging_query_string_var   = 'page';
 	var $paging_query_string_var_value = 0;
@@ -289,6 +289,8 @@ class Pagination {
         $records_limit = $this->per_page;
         $total_records = $this->total_rows;
         
+        $query_criteria_text =  trim($query_criteria_text);
+        
         $showing_rec_to = ($records_offset+$records_limit);
         
         if ($showing_rec_to > $total_records) { 
@@ -300,7 +302,7 @@ class Pagination {
         }
         
         if ($query_criteria_text != '') {
-            $query_criteria_text = "for keywords <strong>\"$query_criteria_text\"</strong>";
+            $query_criteria_text = "for <strong>\"$query_criteria_text\"</strong>";
         }
         
         $showing_rec_from = $records_offset+1;

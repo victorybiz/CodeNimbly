@@ -32,7 +32,12 @@ class Auth {
             $this->registry->registerLibrary('Session', 'session', true);            
             $Registry =& $this->registry;
         }
+        
+        
+         //Load the helper file 
+        $this->registry->loadHelper('auth_helper');
 	}
+    
     
     /**
      * Current Page Url
@@ -52,24 +57,33 @@ class Auth {
      * 
      * @return void
      */
-    public function checkAuth($restrict_to_user_account_type = array())
+    public function checkAuth()
     {
-        // self::checkSessionConcurrency();
-
-        // if user is NOT logged in...
+        $auth_failed = false;
+        // $this->checkSessionConcurrency();
         if (!$this->isUserLoggedIn()) {
-            // ... then treat user as "not logged in", destroy session, redirect to login page
+            $auth_failed =  true;
+        }
+
+        // if user is NOT logged in or the login ...
+        if (!$this->registry->auth_model->userCheckPoint($this->userId())) {
+            
+            $remember_me_cookie = $this->registry->session->getCookie($this->registry->config->get('remember_me_cookie_name'));
+            //Try login with cookie else redirect to lgoin page
+            if (!$this->registry->auth_model->loginWithCookie($remember_me_cookie)) {
+                $auth_failed =  true;
+            }        
+        }
+        
+        if ($auth_failed === true) {
+            // then treat user as "not logged in", destroy session, redirect to login page
             $this->registry->session->destroy();
+        
+             $this->registry->session->init();
 
             // send the user to the login form page, but also add the current page's URI (the part after the base URL)
             // as a parameter argument, making it possible to send the user back to where he/she came from after a successful login
             header('location: ' . $this->registry->config->get('base_url') . 'login?returnUrl=' . urlencode($this->currentPageUrl()));
-            exit();
-        }
-        // if user is logged in, then check for logged in user account type  against user account type restriction if any is specified
-        if (!empty($restrict_to_user_account_type) && !in_array($this->userAccountType, $restrict_to_user_account_type)) {
-            
-            header('location: ' . $this->registry->config->get('base_url') . 'restricted-access?returnUrl=' . urlencode($this->currentPageUrl()));
             exit();
         }
     }
@@ -109,16 +123,6 @@ class Auth {
     public function userId()
     {
         return $this->registry->session->get('user_id');        
-    }
-    
-    /**
-     * Get user account type
-     *
-     * @return mixed
-     */
-    public function userAccountType()
-    {
-        return $this->registry->session->get('user_account_type');        
     }
     
     

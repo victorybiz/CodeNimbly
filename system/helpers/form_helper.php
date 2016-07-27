@@ -16,6 +16,43 @@ if (! function_exists('set_form_value')) {
         global $Registry;
 		$value = $Registry->request->post($field);
         if (!is_null($value)) {
+             // sanitize the $value with HTMLPurifier
+            $Registry->registerLibrary('HTMLPurifier', 'htmlpurifier', true);
+            $value = $Registry->htmlpurifier->purify($value);
+            return $value;
+        } else {
+            return $default;
+        }
+	}
+}
+
+
+if (! function_exists('set_form_get_value')) {
+	function set_form_get_value($field, $default="")
+    {   
+        global $Registry;
+		$value = $Registry->request->get($field);
+        if (!is_null($value)) {
+             // sanitize the $value with HTMLPurifier
+            $Registry->registerLibrary('HTMLPurifier', 'htmlpurifier', true);
+            $value = $Registry->htmlpurifier->purify($value);
+            return $value;
+        } else {
+            return $default;
+        }
+	}
+}
+
+
+if (! function_exists('set_form_post_get_value')) {
+	function set_form_post_get_value($field, $default="")
+    {   
+        global $Registry;
+		$value = $Registry->request->post_get($field);
+        if (!is_null($value)) {
+             // sanitize the $value with HTMLPurifier
+            $Registry->registerLibrary('HTMLPurifier', 'htmlpurifier', true);
+            $value = $Registry->htmlpurifier->purify($value);
             return $value;
         } else {
             return $default;
