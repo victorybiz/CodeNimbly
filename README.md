@@ -1,6 +1,6 @@
 # CodeNimbly
 
-An extensible micro HMVC framework for PHP newbies and crafters.
+An extensible micro framework for PHP newbies and crafters.
 
 "Coded" with love in Nigeria.
 
